@@ -1,4 +1,3 @@
-
 export interface IUmbracoContentDeliveryApiItem {
   byId(...id: string[]): IUmbracoContentDeliveryApiItem;
   byPath(path: string): IUmbracoContentDeliveryApiItem;

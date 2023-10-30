@@ -3,11 +3,11 @@ import type { IFetchSelectorAction } from './IFetchSelectorAction';
 import type { IUmbracoContentDeliveryApiItem } from './IUmbracoContentDeliveryApiItem';
 
 export interface IUmbracoContentDeliveryApi {
-  queryParams: { string: string; };
+  queryParams: { [key: string]: string | number | string[] };
 
   // fetching
   fetch(
-    selector: 'ancestors' | 'children' | 'descendants'
+    selector: 'ancestors' | 'children' | 'descendants',
   ): IFetchSelectorAction;
   addFetch(selector: string, id: string): IUmbracoContentDeliveryApi;
 

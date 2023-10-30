@@ -8,21 +8,23 @@ import { SortAction } from './actions/SortAction';
 import { FetchSelectorAction } from './actions/FetchSelectorAction';
 import { toQueryString } from './utils';
 
-
 /**
  * Represents a fluent API wrapper for Umbraco Content Delivery API.
  */
 export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
   public baseURL: string;
   public endpoint: string;
-  public queryParams: any;
+  public queryParams: { [key: string]: string | number | string[] };
 
   /**
    * Initializes a new instance of the UmbracoContentDeliveryApi class.
    * @param baseURL The base URL of the Umbraco instance.
    * @param {string} endpoint The endpoint of the Umbraco Content Delivery API.
    */
-  constructor(baseURL: string, endpoint: string = '/umbraco/delivery/api/v1/content') {
+  constructor(
+    baseURL: string,
+    endpoint: string = '/umbraco/delivery/api/v1/content',
+  ) {
     this.baseURL = baseURL;
     this.endpoint = endpoint;
     this.queryParams = {};
@@ -49,7 +51,7 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
     selector: 'ancestors' | 'children' | 'descendants',
     id: string,
   ): IUmbracoContentDeliveryApi {
-    this.queryParams.fetch = `${selector}:${id}`;
+    this.queryParams['fetch'] = `${selector}:${id}`;
     return this;
   }
 
@@ -70,8 +72,8 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
     negate: boolean,
   ): IUmbracoContentDeliveryApi {
     const filterValue = negate ? `!${value}` : value;
-    this.queryParams.filter = this.queryParams.filter
-      ? [...this.queryParams.filter, `${type}:${filterValue}`]
+    this.queryParams['filter'] = this.queryParams['filter']
+      ? [...(this.queryParams['filter'] as string[]), `${type}:${filterValue}`]
       : [`${type}:${filterValue}`];
     return this;
   }
@@ -163,8 +165,8 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
    * @returns The current instance of the UmbracoContentDeliveryApi class.
    */
   addSort(field: string, order: 'asc' | 'desc'): IUmbracoContentDeliveryApi {
-    this.queryParams.sort = this.queryParams.sort
-      ? [...this.queryParams.sort, `${field}:${order}`]
+    this.queryParams['sort'] = this.queryParams['sort']
+      ? [...(this.queryParams['sort'] as string[]), `${field}:${order}`]
       : [`${field}:${order}`];
     return this;
   }
@@ -179,7 +181,7 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
    * @returns The current instance of the UmbracoContentDeliveryApi class.
    */
   skip(count: number): IUmbracoContentDeliveryApi {
-    this.queryParams.skip = count;
+    this.queryParams['skip'] = count;
     return this;
   }
 
@@ -189,7 +191,7 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
    * @returns The current instance of the UmbracoContentDeliveryApi class.
    */
   take(count: number): IUmbracoContentDeliveryApi {
-    this.queryParams.take = count;
+    this.queryParams['take'] = count;
     return this;
   }
 
@@ -203,7 +205,7 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
    * @returns The current instance of the UmbracoContentDeliveryApi class.
    */
   expandProperty(...propertyAliases: string[]): IUmbracoContentDeliveryApi {
-    this.queryParams.expand = `property:${propertyAliases.join(',')}`;
+    this.queryParams['expand'] = `property:${propertyAliases.join(',')}`;
     return this;
   }
 
@@ -212,7 +214,7 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
    * @returns The current instance of the UmbracoContentDeliveryApi class.
    */
   expandAll(): IUmbracoContentDeliveryApi {
-    this.queryParams.expand = 'all';
+    this.queryParams['expand'] = 'all';
     return this;
   }
 
@@ -248,10 +250,11 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
 }
 
 export class UmbracoContentDeliveryApiItem
-  implements IUmbracoContentDeliveryApiItem {
+  implements IUmbracoContentDeliveryApiItem
+{
   private baseURL: string;
   private endpoint: string;
-  private queryParams: any;
+  private queryParams: { [key: string]: string | number | string[] };
 
   constructor(baseURL: string, endpoint: string | null = null) {
     this.baseURL = baseURL;
@@ -260,11 +263,11 @@ export class UmbracoContentDeliveryApiItem
   }
 
   expandProperty(...propertyAliases: string[]): IUmbracoContentDeliveryApiItem {
-    this.queryParams.expand = `property:${propertyAliases.join(',')}`;
+    this.queryParams['expand'] = `property:${propertyAliases.join(',')}`;
     return this;
   }
   expandAll(): IUmbracoContentDeliveryApiItem {
-    this.queryParams.expand = 'all';
+    this.queryParams['expand'] = 'all';
     return this;
   }
 

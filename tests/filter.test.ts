@@ -1,6 +1,5 @@
 import { UmbracoContentDeliveryApi } from '../src/index';
 const baseURL = 'http://localhost:3000';
-const randomGuidString = '12345678-1234-1234-1234-123456789012';
 
 test('should filter by content type', () => {
   const api = new UmbracoContentDeliveryApi(baseURL);

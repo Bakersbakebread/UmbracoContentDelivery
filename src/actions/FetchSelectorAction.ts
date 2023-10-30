@@ -7,7 +7,7 @@ export class FetchSelectorAction implements IFetchSelectorAction {
 
   constructor(
     baseQuery: IUmbracoContentDeliveryApi,
-    selector: 'ancestors' | 'children' | 'descendants'
+    selector: 'ancestors' | 'children' | 'descendants',
   ) {
     this.baseQuery = baseQuery;
     this.selector = selector;

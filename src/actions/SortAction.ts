@@ -1,4 +1,3 @@
-
 import type { ISortAction } from '../interfaces/ISortAction';
 import type { IUmbracoContentDeliveryApi } from '../interfaces/IUmbracoContentDeliveryApi';
 

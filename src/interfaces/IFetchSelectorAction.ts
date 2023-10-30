@@ -1,6 +1,5 @@
 import type { IUmbracoContentDeliveryApi } from './IUmbracoContentDeliveryApi';
 
-
 /**
  * Interface for a fetch selector action, which provides methods for fetching Umbraco content
  * by ID or path.
