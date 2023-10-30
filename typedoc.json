@@ -1,0 +1,12 @@
+{
+  "out": "./docs",
+  "entryPoints": [
+    "./src/index.ts",
+    "./src/interfaces/",
+    "./src/actions/"
+  ],
+  "name": "Umbraco Content Delivery Api",
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "tsconfig": "./tsconfig.bundle.json"
+}

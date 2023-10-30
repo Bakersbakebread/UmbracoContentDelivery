@@ -1,0 +1,1 @@
+{"version":3,"file":"IFetchSelectorAction.d.ts","sourceRoot":"","sources":["../../interfaces/IFetchSelectorAction.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,0BAA0B,EAAE,MAAM,8BAA8B,CAAC;AAG/E,MAAM,WAAW,oBAAoB;IACnC,IAAI,CAAC,EAAE,EAAE,MAAM,GAAG,0BAA0B,CAAC;IAC7C,MAAM,CAAC,IAAI,EAAE,MAAM,GAAG,0BAA0B,CAAC;CAClD"}
