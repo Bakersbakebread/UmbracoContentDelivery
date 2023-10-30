@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import type { IUmbracoContentDeliveryApi } from './interfaces/IUmbracoContentDeliveryApi';
 import type { IUmbracoContentDeliveryApiItem } from './interfaces/IUmbracoContentDeliveryApiItem';
 import type { IFetchSelectorAction } from './interfaces/IFetchSelectorAction';
@@ -15,6 +14,9 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
   public baseURL: string;
   public endpoint: string;
   public queryParams: { [key: string]: string | number | string[] };
+  private apiKey: string;
+  private culture: string = '';
+  private _isPreview: boolean = false;
 
   /**
    * Initializes a new instance of the UmbracoContentDeliveryApi class.
@@ -22,9 +24,11 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
    * @param {string} endpoint The endpoint of the Umbraco Content Delivery API.
    */
   constructor(
+    apiKey: string,
     baseURL: string,
     endpoint: string = '/umbraco/delivery/api/v1/content',
   ) {
+    this.apiKey = apiKey;
     this.baseURL = baseURL;
     this.endpoint = endpoint;
     this.queryParams = {};
@@ -218,6 +222,18 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
     return this;
   }
 
+  withCulture(culture: string): IUmbracoContentDeliveryApi {
+    if(culture) {
+      this.culture = culture;
+    }
+    return this;
+  }
+
+  isPreview(): IUmbracoContentDeliveryApi {
+    this._isPreview = true;
+    return this;
+  }
+
   /**
    * Creates a new instance of the UmbracoContentDeliveryApiItem class.
    * @returns A new instance of the UmbracoContentDeliveryApiItem class.
@@ -234,10 +250,27 @@ export class UmbracoContentDeliveryApi implements IUmbracoContentDeliveryApi {
     const url = `${this.baseURL}${this.endpoint}${toQueryString(
       this.queryParams,
     )}`;
+
+    type Headers = {
+      'Api-Key': string;
+      'Accept-Language'?: string;
+      'Preview'?: boolean;
+      'Start-Item'? : string;
+    }
+
+    const headers: Headers = {
+      'Api-Key': this.apiKey,
+    };
+
+    if (this.culture) headers['Accept-Language'] = this.culture;
+    if (this._isPreview) headers['Preview'] = this._isPreview;
+
     return axios
-      .get(url)
+      .get(url, {headers: headers})
       .then((response) => response.data)
-      .catch((error) => error);
+      .catch((error) => {
+        throw error;
+      });
   }
 
   /**

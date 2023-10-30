@@ -36,4 +36,8 @@ export interface IUmbracoContentDeliveryApi {
   get(): Promise<any>;
   getQueryString(): string;
   item(): IUmbracoContentDeliveryApiItem;
+
+  // headers
+  withCulture(culture: string): IUmbracoContentDeliveryApi;
+  isPreview(): IUmbracoContentDeliveryApi;
 }
